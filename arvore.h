@@ -20,6 +20,10 @@ void print_tree(struct node *root);
 //free a given tree
 void free_tree(struct node *root);
 
+//find minimum node from a given subtree
+struct node *minimum(struct node *sbroot);
 
+//exclude an existing node and returns it or returns NULL
+void delete_node(struct node **root, struct node *rem);
 
 #endif

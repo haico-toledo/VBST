@@ -19,6 +19,18 @@ int main (){
     
     print_tree(root);
     printf("\n");
+    
+    delete_node(&root, find_or_insert_node(root, 99));
+    delete_node(&root, find_or_insert_node(root, 10));
+    print_tree(root);
+    printf("\n");
+    
+    delete_node(&root, find_or_insert_node(root, 5));
+    delete_node(&root, find_or_insert_node(root, 102));
+    delete_node(&root, find_or_insert_node(root, 100));
+    print_tree(root);
+    printf("\n");
+    
     free_tree(root);
     return 0;
 }
