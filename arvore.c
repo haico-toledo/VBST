@@ -42,13 +42,14 @@ void print_tree(struct node *root) {
     if (root == NULL) {
         return;
     }
-    
+        
     printf("(");
     printf("%d ", root->key);
     print_tree(root->l_son);
     print_tree(root->r_son);
     printf(")");
     
+
     return;
 }
 
