@@ -97,7 +97,7 @@ def desenhar_arvore(surface, no, x, y, dx, dy, fonte, escala):
 def main():
     pygame.init()
     tela = pygame.display.set_mode((LARGURA, ALTURA))
-    pygame.display.set_caption("Visualizador de BST - (Touchpad / Scroll / Drag)")
+    pygame.display.set_caption("Visualizador de BST - (Scroll para Zoom | Botão Esquerdo para Mover)")
     fonte = pygame.font.SysFont("Arial", 16, bold=True)
 
     try:
@@ -127,14 +127,7 @@ def main():
             if evento.type == pygame.QUIT:
                 rodando = False
 
-            # --- ZOOM VIA TOUCHPAD (Gesto de Pinça) ---
-            elif evento.type == pygame.MULTIGESTURE:
-                # event.pinch > 0 indica afastamento dos dedos (Zoom In)
-                # event.pinch < 0 indica aproximação dos dedos (Zoom Out)
-                fator_zoom = 1.0 + evento.pinch * 2.0
-                escala = max(0.3, min(3.0, escala * fator_zoom))
-
-            # --- ZOOM VIA SCROLL DO MOUSE ---
+            # Zoom com a roda do mouse
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if evento.button == 4:  # Scroll Up
                     escala = min(escala * 1.1, 3.0)
@@ -148,7 +141,6 @@ def main():
                 if evento.button == 1:
                     arrastando = False
 
-            # --- PAN (Mover a tela) ---
             elif evento.type == pygame.MOUSEMOTION:
                 if arrastando:
                     dx_mouse = evento.pos[0] - inicio_drag[0]
@@ -173,3 +165,6 @@ def main():
         pygame.display.flip()
 
     pygame.quit()
+
+if __name__ == "__main__":
+    main()
