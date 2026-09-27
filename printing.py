@@ -97,7 +97,7 @@ def desenhar_arvore(surface, no, x, y, dx, dy, fonte, escala):
 def main():
     pygame.init()
     tela = pygame.display.set_mode((LARGURA, ALTURA))
-    pygame.display.set_caption("Visualizador de BST - (Scroll para Zoom | Botão Esquerdo para Mover)")
+    pygame.display.set_caption("Visualizador de BST - (Ctrl +/- ou Scroll para Zoom | Drag para Mover)")
     fonte = pygame.font.SysFont("Arial", 16, bold=True)
 
     try:
@@ -110,14 +110,13 @@ def main():
     raiz = parse_bst_string(string_arvore)
     altura = calcular_altura(raiz)
 
-    # Variáveis para Controle de Câmera (Pan & Zoom)
+    # Variáveis para Controle de Câmera
     offset_x = LARGURA // 2
     offset_y = 60
     escala = 1.0
     arrastando = False
     inicio_drag = (0, 0)
 
-    # Ajusta o espaçamento inicial de acordo com a altura
     dx_inicial = min(LARGURA // 3, 40 * (2 ** (min(altura, 5) - 1)))
     dy_inicial = min(80, (ALTURA - 100) // max(altura, 1))
 
@@ -127,13 +126,22 @@ def main():
             if evento.type == pygame.QUIT:
                 rodando = False
 
+            # Zoom com Teclado (Ctrl + / Ctrl -)
+            elif evento.type == pygame.KEYDOWN:
+                mods = pygame.key.get_mods()
+                if mods & pygame.KMOD_CTRL:
+                    if evento.key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
+                        escala = min(escala * 1.15, 4.0)
+                    elif evento.key in (pygame.K_MINUS, pygame.K_KP_MINUS):
+                        escala = max(escala / 1.15, 0.2)
+
             # Zoom com a roda do mouse
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if evento.button == 4:  # Scroll Up
-                    escala = min(escala * 1.1, 3.0)
+                    escala = min(escala * 1.1, 4.0)
                 elif evento.button == 5:  # Scroll Down
-                    escala = max(escala / 1.1, 0.3)
-                elif evento.button == 1:  # Botão Esquerdo (Drag)
+                    escala = max(escala / 1.1, 0.2)
+                elif evento.button == 1:  # Botão Esquerdo
                     arrastando = True
                     inicio_drag = evento.pos
 
