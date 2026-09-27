@@ -26,4 +26,7 @@ struct node *minimum(struct node *sbroot);
 //exclude an existing node and returns it or returns NULL
 void delete_node(struct node **root, struct node *rem);
 
+//rotates the right son of a node towards left
+void rotate_left(struct node **root, struct node *sbroot);
+
 #endif

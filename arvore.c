@@ -107,6 +107,37 @@ void delete_node(struct node **root, struct node *rem) {
     return;
 }
 
+void rotate_left(struct node **root, struct node *sbroot) {
+    if (sbroot->r_son == NULL && sbroot->l_son == NULL) {
+        return;
+    }
+
+    struct node *rot = sbroot->r_son;
+    sbroot->r_son = rot->l_son;
+
+    if(sbroot->r_son != NULL) {
+        sbroot->r_son->dad = sbroot->r_son;
+    }
+
+    rot->dad = sbroot->dad;
+    if(sbroot->dad != NULL) {
+        if(sbroot->dad->l_son == sbroot) {
+            sbroot->dad->l_son = rot;
+        }
+        else if(sbroot->dad->r_son == sbroot) {
+            sbroot->dad->r_son = rot;
+        }
+    }
+    else { //sbroot->dad == NULL
+        *root = rot;
+    }
+
+    sbroot->dad = rot;
+    rot->l_son = sbroot;
+
+    return;
+}
+
 
 //to do:
 //colocar flag no find_or_insert para escolher entre insert ou retornar NULL se o nodo ainda nao existe

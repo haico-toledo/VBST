@@ -15,6 +15,8 @@ int main (){
     find_or_insert_node(root, 101);
     find_or_insert_node(root, 102);
     find_or_insert_node(root, 99);
+
+    rotate_left(&root, find_or_insert_node(root, 5));
  
     print_tree(root);
     printf("\n");
