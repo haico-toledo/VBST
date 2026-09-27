@@ -40,6 +40,7 @@ struct node *find_or_insert_node(struct node *sbroot, int key){
 
 void print_tree(struct node *root) {
     if (root == NULL) {
+        printf("() ");
         return;
     }
         
