@@ -29,4 +29,7 @@ void delete_node(struct node **root, struct node *rem);
 //rotates the right son of a node towards left
 void rotate_left(struct node **root, struct node *sbroot);
 
+//rotates the left son of a node towards right
+void rotate_right(struct node **root, struct node *sbroot);
+
 #endif

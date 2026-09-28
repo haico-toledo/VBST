@@ -108,23 +108,28 @@ void delete_node(struct node **root, struct node *rem) {
 }
 
 void rotate_left(struct node **root, struct node *sbroot) {
-    if (sbroot->r_son == NULL && sbroot->l_son == NULL) {
+    //does nothing if sbroot or right son is NULL
+    if (sbroot == NULL || sbroot->r_son == NULL) {
         return;
     }
 
+    //rot is the node about to be rotated
     struct node *rot = sbroot->r_son;
     sbroot->r_son = rot->l_son;
-
-    if(sbroot->r_son != NULL) {
-        sbroot->r_son->dad = sbroot->r_son;
+    
+    //sbroot's r_son dad become sbroot
+    if (sbroot->r_son != NULL) {
+        sbroot->r_son->dad = sbroot;
     }
 
+    //sbroot's dad becomes rot's dad
     rot->dad = sbroot->dad;
-    if(sbroot->dad != NULL) {
-        if(sbroot->dad->l_son == sbroot) {
+    if (sbroot->dad != NULL) {
+        //subtree's dad son becomes rot 
+        if (sbroot->dad->l_son == sbroot) {
             sbroot->dad->l_son = rot;
         }
-        else if(sbroot->dad->r_son == sbroot) {
+        else if (sbroot->dad->r_son == sbroot) {
             sbroot->dad->r_son = rot;
         }
     }
@@ -138,7 +143,40 @@ void rotate_left(struct node **root, struct node *sbroot) {
     return;
 }
 
+void rotate_right(struct node **root, struct node *sbroot) {
+    if (sbroot == NULL || sbroot->l_son == NULL) {
+        return;
+    }    
+
+    struct node *rot = sbroot->l_son;
+    sbroot->l_son = rot->r_son;
+
+    if (sbroot->l_son != NULL) {
+        sbroot->l_son->dad = sbroot;
+    }
+
+    rot->dad = sbroot-> dad;
+    if (rot->dad == NULL) {
+        *root = rot;
+    }
+    else {
+        if (sbroot->dad->l_son == sbroot) {
+            sbroot->dad->l_son = rot;
+        }
+        else if (sbroot->dad->r_son == sbroot) {
+            sbroot->dad->r_son = rot;
+        }
+    }
+
+    sbroot->dad = rot;
+    rot->r_son = sbroot;
+
+    return;
+}
+
 
 //to do:
 //colocar flag no find_or_insert para escolher entre insert ou retornar NULL se o nodo ainda nao existe
-//insert root node
+//trocar o retorno das rotates para retornar 1 se deu erro e 0 se rotou
+//change root node
+
