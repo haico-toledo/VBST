@@ -1,5 +1,5 @@
-#ifndef ARVORE
-#define ARVORE
+#ifndef TREE
+#define TREE
 
 struct node {
     int key;

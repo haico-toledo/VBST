@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -fPIC
 TARGET = teste_arvore
-SRCS = main.c arvore.c auxiliary.c
-OBJS = main.o arvore.o auxiliary.o
-HEADERS = arvore.h auxiliary.h
+SRCS = main.c tree.c auxiliary.c
+OBJS = main.o tree.o auxiliary.o
+HEADERS = tree.h auxiliary.h
 
 # Variáveis para o SWIG
-INTERFACE = arvores.i
+INTERFACE = tree.i
 WRAP_C = arvores_wrap.c
 WRAP_OBJ = arvores_wrap.o
 SHARED_LIB = _arvores.so
@@ -26,10 +26,10 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Regra para compilar com o SWIG
-swig: arvore.o
+swig: tree.o
 	swig -python $(INTERFACE)
 	$(CC) $(CFLAGS) $(PY_CFLAGS) -c $(WRAP_C) -o $(WRAP_OBJ)
-	$(CC) -shared arvore.o $(WRAP_OBJ) -o $(SHARED_LIB) $(PY_LDFLAGS)
+	$(CC) -shared tree.o $(WRAP_OBJ) -o $(SHARED_LIB) $(PY_LDFLAGS)
 
 clean:
 	rm -f $(TARGET) $(OBJS) $(WRAP_C) $(WRAP_OBJ) $(SHARED_LIB) $(PYTHON_MODULE)
